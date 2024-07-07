@@ -10,14 +10,16 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer sprite;
     private Animator anim;
     [SerializeField] private AudioSource jumpSoundEffect;
-
     [SerializeField] private LayerMask jumpalbleGround;
+
 
     private float dirX =0f;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 14f;
+    [SerializeField] private float doubleJumpForce = 12f;
+    private bool canDoubleJump;
 
-    private enum MovementState {idel,running,jumping,falling }
+    private enum MovementState {idel,running,jumping,falling,wallSlide,doubleJump}
  
     void Start()
     {
@@ -32,43 +34,62 @@ public class PlayerMovement : MonoBehaviour
     {
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2 (dirX * moveSpeed, rb.velocity.y);
-        if (Input.GetKeyDown("space") && isGround() )
+        if (Input.GetKeyDown("space"))
         {
             jumpSoundEffect.Play();
-            rb.velocity = new Vector3(rb.velocity.x,jumpForce,0);
+            if (isGround())
+            {
+                rb.velocity = new Vector3(rb.velocity.x,jumpForce,0);
+                canDoubleJump = true;
+            }
+            else
+            {
+                if(Input.GetKeyDown("space") && canDoubleJump)
+                {
+                    rb.velocity = new Vector3(rb.velocity.x, doubleJumpForce, 0);
+                    canDoubleJump =false;
+                }
+            }
         }
         UpdateAnimationState();
     }
     private void UpdateAnimationState()
     {
-        MovementState state;
+        MovementState State;
         if (dirX > 0)
         {
-            state = MovementState.running;
+            State = MovementState.running;
             sprite.flipX = false;
         }
         else if (dirX < 0)
         {
-            state = MovementState.running;
+            State = MovementState.running;
             sprite.flipX = true;
         }
         else
         {
-            state = MovementState.idel;
+            State = MovementState.idel;
             
         }
-        if(rb.velocity.y > .1f)
+        if (rb.velocity.y > .1f)
         {
-            state = MovementState.jumping;
+            if(canDoubleJump)
+                State = MovementState.jumping;
+            else
+                State = MovementState.doubleJump;
         }
         else if(rb.velocity.y < -.1f)
         {
-            state = MovementState.falling;
+            State = MovementState.falling;
         }
-        anim.SetInteger("state", (int)state);
+        anim.SetInteger("State", (int)State);
     }
     private bool isGround()
     {
         return Physics2D.BoxCast(coll.bounds.center,coll.bounds.size,0f,Vector2.down,.1f,jumpalbleGround);
+    }
+    public void DisableDoubleJump()
+    {
+        canDoubleJump = true;
     }
 }
