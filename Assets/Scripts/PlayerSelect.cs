@@ -15,12 +15,35 @@ public class PlayerSelect : MonoBehaviour
 
     void Start()
     {
+        UpdatePlayer();
+    }
+
+    public void NextSkin()
+    {
+        playerSelected = (Player)(((int)playerSelected + 1) % System.Enum.GetValues(typeof(Player)).Length);
+        UpdatePlayer();
+    }
+
+    public void PreviousSkin()
+    {
+        playerSelected = (Player)(((int)playerSelected - 1 + System.Enum.GetValues(typeof(Player)).Length) % System.Enum.GetValues(typeof(Player)).Length);
+        UpdatePlayer();
+    }
+
+    public void SetSkin(Player selectedPlayer)
+    {
+        playerSelected = selectedPlayer;
+        UpdatePlayer();
+    }
+
+    void UpdatePlayer()
+    {
         switch (playerSelected)
         {
             case Player.Guy:
                 spriteRenderer.sprite = playerRender[0];
                 anim.runtimeAnimatorController = playerController[0];
-                break; 
+                break;
             case Player.PinkMan:
                 spriteRenderer.sprite = playerRender[1];
                 anim.runtimeAnimatorController = playerController[1];
@@ -33,11 +56,6 @@ public class PlayerSelect : MonoBehaviour
                 spriteRenderer.sprite = playerRender[2];
                 anim.runtimeAnimatorController = playerController[2];
                 break;
-
-            default:
-                break;
         }
     }
-
-    
 }
