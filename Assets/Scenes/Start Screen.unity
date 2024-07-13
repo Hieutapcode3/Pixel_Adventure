@@ -632,6 +632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerIdle: {fileID: 200509148}
   playerRun: {fileID: 1420552105}
+  mainPlayer: {fileID: 7142974381817198706, guid: 1c067f4d406a6b841a84b3aaa5453ff2, type: 3}
 --- !u!4 &172423283
 Transform:
   m_ObjectHideFlags: 0
@@ -836,6 +837,7 @@ MonoBehaviour:
   - {fileID: -6367560908665664636, guid: d348dff3819df794186a80cb95777629, type: 3}
   - {fileID: -6367560908665664636, guid: cd947491a13509945aa1b644f9db3ef2, type: 3}
   - {fileID: -6367560908665664636, guid: 3750f45c844123341b9a777a96cb1eca, type: 3}
+  skinSave: 0
 --- !u!95 &200509149
 Animator:
   serializedVersion: 5
@@ -2672,6 +2674,7 @@ MonoBehaviour:
   - {fileID: -6367560908665664636, guid: d348dff3819df794186a80cb95777629, type: 3}
   - {fileID: -6367560908665664636, guid: cd947491a13509945aa1b644f9db3ef2, type: 3}
   - {fileID: -6367560908665664636, guid: 3750f45c844123341b9a777a96cb1eca, type: 3}
+  skinSave: 0
 --- !u!95 &1420552106
 Animator:
   serializedVersion: 5

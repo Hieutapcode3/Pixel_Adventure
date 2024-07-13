@@ -12,27 +12,38 @@ public class PlayerSelect : MonoBehaviour
 
     public RuntimeAnimatorController[] playerController;
     public Sprite[] playerRender;
+    public int skinSave;
 
     void Start()
     {
+        LoadSkin();
         UpdatePlayer();
     }
 
     public void NextSkin()
     {
         playerSelected = (Player)(((int)playerSelected + 1) % System.Enum.GetValues(typeof(Player)).Length);
+        SaveSkin();
         UpdatePlayer();
     }
 
     public void PreviousSkin()
     {
         playerSelected = (Player)(((int)playerSelected - 1 + System.Enum.GetValues(typeof(Player)).Length) % System.Enum.GetValues(typeof(Player)).Length);
+        SaveSkin();
         UpdatePlayer();
     }
 
     public void SetSkin(Player selectedPlayer)
     {
         playerSelected = selectedPlayer;
+        SaveSkin();
+        UpdatePlayer();
+    }
+
+    public void SetSkinBySave()
+    {
+        playerSelected = (Player)skinSave;
         UpdatePlayer();
     }
 
@@ -56,6 +67,26 @@ public class PlayerSelect : MonoBehaviour
                 spriteRenderer.sprite = playerRender[2];
                 anim.runtimeAnimatorController = playerController[2];
                 break;
+        }
+    }
+
+    void SaveSkin()
+    {
+        skinSave = (int)playerSelected;
+        PlayerPrefs.SetInt("SkinSave", skinSave);
+        PlayerPrefs.Save();
+    }
+
+    void LoadSkin()
+    {
+        if (PlayerPrefs.HasKey("SkinSave"))
+        {
+            skinSave = PlayerPrefs.GetInt("SkinSave");
+            playerSelected = (Player)skinSave;
+        }
+        else
+        {
+            SaveSkin();
         }
     }
 }

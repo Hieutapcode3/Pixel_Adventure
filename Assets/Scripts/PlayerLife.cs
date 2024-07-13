@@ -8,7 +8,7 @@ public class PlayerLife : MonoBehaviour
     private Animator anim;
     private Rigidbody2D rb;
     [SerializeField] private AudioSource deathSoundEffect;
-
+    public PlayerMovement player;
     
     private void Start()
     { 
@@ -31,5 +31,6 @@ public class PlayerLife : MonoBehaviour
     private void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        player.SetSkin();
     }
 }

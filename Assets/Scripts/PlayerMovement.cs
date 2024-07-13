@@ -17,7 +17,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 14f;
     [SerializeField] private float doubleJumpForce = 12f;
+    public Transform startPoint;
     private bool canDoubleJump;
+
+    public PlayerSelect skinPlayer;
 
     private enum MovementState {idel,running,jumping,falling,wallSlide,doubleJump}
  
@@ -27,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        SetSkin();
+        transform.position = new Vector2(startPoint.position.x + 0.6f,startPoint.position.y);
     }
 
     // Update is called once per frame
@@ -91,5 +96,12 @@ public class PlayerMovement : MonoBehaviour
     public void DisableDoubleJump()
     {
         canDoubleJump = true;
+    }
+    public void SetSkin()
+    {
+        if (SkinManager.Instance != null)
+        {
+            SkinManager.Instance.SetMainPlayer(skinPlayer);
+        }
     }
 }

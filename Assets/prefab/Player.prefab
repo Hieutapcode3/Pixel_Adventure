@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 7142974381817198706}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,6 +178,9 @@ MonoBehaviour:
     m_Bits: 64
   moveSpeed: 7
   jumpForce: 14
+  doubleJumpForce: 12
+  startPoint: {fileID: 0}
+  skinPlayer: {fileID: 7142974381817198706}
 --- !u!114 &4373560044043230735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathSoundEffect: {fileID: 4373560044043230731}
+  player: {fileID: 0}
 --- !u!82 &4373560044043230729
 AudioSource:
   m_ObjectHideFlags: 0
@@ -518,3 +522,4 @@ MonoBehaviour:
   - {fileID: -6367560908665664636, guid: d348dff3819df794186a80cb95777629, type: 3}
   - {fileID: -6367560908665664636, guid: cd947491a13509945aa1b644f9db3ef2, type: 3}
   - {fileID: -6367560908665664636, guid: 3750f45c844123341b9a777a96cb1eca, type: 3}
+  skinSave: 0
