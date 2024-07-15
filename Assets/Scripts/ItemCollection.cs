@@ -11,7 +11,7 @@ public class ItemCollection : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Cherry"))
+        if (collision.gameObject.CompareTag("Item"))
         {
             itemCollect.Play();
             collision.GetComponent<Animator>().SetTrigger("Collision");

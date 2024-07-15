@@ -5,14 +5,14 @@ public class DropTrap : MonoBehaviour
 {
     [SerializeField] private GameObject[] wayPoints;
     [SerializeField] private Animator anim;
-    public float SpeedDrop = 2.5f;
-    [SerializeField] private float timeDelay;
+    public float SpeedDrop = 5f;
     private int currentWaypointIndex = 0;
 
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        anim.SetTrigger("OpenEye");
     }
 
     void Update()
@@ -22,21 +22,25 @@ public class DropTrap : MonoBehaviour
 
     public IEnumerator DropBlink()
     {
-        anim.SetTrigger("OpenEye");
-        if (Vector2.Distance(wayPoints[currentWaypointIndex].transform.position, transform.position) < .1f)
+        Vector3 target = wayPoints[currentWaypointIndex].transform.position;
+        transform.position = Vector2.MoveTowards(transform.position,target, SpeedDrop * Time.deltaTime);
+
+        if (transform.position == wayPoints[currentWaypointIndex].transform.position)
         {
             currentWaypointIndex++;
             if (currentWaypointIndex >= wayPoints.Length)
             {
                 currentWaypointIndex =0;
             }
-            if(currentWaypointIndex == 0)
-            {
-                anim.SetTrigger("Drop");
-            }
-
         }
-        transform.position = Vector2.MoveTowards(transform.position, wayPoints[currentWaypointIndex].transform.position, SpeedDrop * Time.deltaTime);
-       yield return null;
+        if(transform.position == wayPoints[1].transform.position)
+        {
+            anim.SetTrigger("Drop");
+        }
+        if(transform.position == wayPoints[0].transform.position)
+        {
+            anim.SetTrigger("OpenEye");
+        }
+        yield return new WaitForSeconds(0.5f);
     }
 }

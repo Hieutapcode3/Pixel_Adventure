@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         dirX = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2 (dirX * moveSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
         if (Input.GetKeyDown("space"))
         {
             jumpSoundEffect.Play();

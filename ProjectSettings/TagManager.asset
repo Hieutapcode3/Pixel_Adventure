@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Cherry
   - Trap
   - CheckPoint
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -44,9 +44,9 @@ TagManager:
   - name: BackGround
     uniqueID: 3640267113
     locked: 0
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Terrain
     uniqueID: 3190725825
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
