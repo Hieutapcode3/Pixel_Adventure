@@ -11,6 +11,7 @@ public class FanControll : MonoBehaviour
     [SerializeField] private float downForce = 2f;
     private bool checkCollision = false;
     private Vector3 defaultPos;
+    [SerializeField] private GameObject fanEffect;
 
     void Start()
     {
@@ -18,6 +19,7 @@ public class FanControll : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<BoxCollider2D>();
         defaultPos = transform.position;
+        fanEffect.SetActive(true);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -32,10 +34,14 @@ public class FanControll : MonoBehaviour
 
     private IEnumerator TurnOff()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         anim.SetTrigger("Off");
+        fanEffect.SetActive(false);
+        yield return new WaitForSeconds(1f);
         col.enabled = false;
         rb.bodyType = RigidbodyType2D.Dynamic;
+        yield return new WaitForSeconds(1.5f);
+        Destroy(gameObject);
     }
 
     private IEnumerator CollisionEffect()

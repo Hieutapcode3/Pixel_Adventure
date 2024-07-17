@@ -15,7 +15,7 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
+  - Trap
   - 
   - 
   - 
@@ -43,6 +43,9 @@ TagManager:
   m_SortingLayers:
   - name: BackGround
     uniqueID: 3640267113
+    locked: 0
+  - name: Trap
+    uniqueID: 2041044039
     locked: 0
   - name: Terrain
     uniqueID: 3190725825

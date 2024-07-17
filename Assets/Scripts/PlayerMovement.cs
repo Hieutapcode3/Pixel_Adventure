@@ -4,26 +4,28 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
     private Rigidbody2D rb;
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
     private Animator anim;
     [SerializeField] private AudioSource jumpSoundEffect;
-    [SerializeField] private LayerMask jumpalbleGround;
+    [SerializeField] private LayerMask jumpableGround;
 
-
-    private float dirX =0f;
+    private float dirX = 0f;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 14f;
     [SerializeField] private float doubleJumpForce = 12f;
-    public Transform startPoint;
+    public Transform StartPoint;
     private bool canDoubleJump;
 
     public PlayerSelect skinPlayer;
 
-    private enum MovementState {idel,running,jumping,falling,wallSlide,doubleJump}
- 
+    [SerializeField] private GameObject dustLeft;
+    [SerializeField] private GameObject dustRight;
+    [SerializeField] private GameObject jumpEffect;
+
+    private enum MovementState { idle, running, jumping, falling, wallSlide, doubleJump }
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -31,72 +33,92 @@ public class PlayerMovement : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         SetSkin();
-        transform.position = new Vector2(startPoint.position.x + 0.6f,startPoint.position.y);
+        transform.position = new Vector2(StartPoint.position.x + 0.6f, StartPoint.position.y);
     }
 
-    // Update is called once per frame
     void Update()
     {
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+
         if (Input.GetKeyDown("space"))
         {
             jumpSoundEffect.Play();
-            if (isGround())
+            if (IsGrounded())
             {
-                rb.velocity = new Vector3(rb.velocity.x,jumpForce,0);
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 canDoubleJump = true;
+                StartCoroutine(ActivateJumpEffect());
             }
-            else
+            else if (canDoubleJump)
             {
-                if(Input.GetKeyDown("space") && canDoubleJump)
-                {
-                    rb.velocity = new Vector3(rb.velocity.x, doubleJumpForce, 0);
-                    canDoubleJump =false;
-                }
+                rb.velocity = new Vector2(rb.velocity.x, doubleJumpForce);
+                canDoubleJump = false;
+                StartCoroutine(ActivateJumpEffect());
             }
         }
+
         UpdateAnimationState();
     }
+
     private void UpdateAnimationState()
     {
-        MovementState State;
+        MovementState state;
+
         if (dirX > 0)
         {
-            State = MovementState.running;
+            state = MovementState.running;
             sprite.flipX = false;
+            dustRight.SetActive(false);
+            dustLeft.SetActive(true);
         }
         else if (dirX < 0)
         {
-            State = MovementState.running;
+            state = MovementState.running;
             sprite.flipX = true;
+            dustRight.SetActive(true);
+            dustLeft.SetActive(false);
         }
         else
         {
-            State = MovementState.idel;
-            
+            state = MovementState.idle;
+            dustRight.SetActive(false);
+            dustLeft.SetActive(false);
         }
-        if (rb.velocity.y > .1f)
+
+        if (rb.velocity.y > 0.1f)
         {
-            if(canDoubleJump)
-                State = MovementState.jumping;
+            if (canDoubleJump)
+                state = MovementState.jumping;
             else
-                State = MovementState.doubleJump;
+                state = MovementState.doubleJump;
         }
-        else if(rb.velocity.y < -.1f)
+        else if (rb.velocity.y < -0.1f)
         {
-            State = MovementState.falling;
+            state = MovementState.falling;
         }
-        anim.SetInteger("State", (int)State);
+
+        anim.SetInteger("State", (int)state);
     }
-    private bool isGround()
+
+    private bool IsGrounded()
     {
-        return Physics2D.BoxCast(coll.bounds.center,coll.bounds.size,0f,Vector2.down,.1f,jumpalbleGround);
+        return Physics2D.BoxCast(coll.bounds.center, coll.bounds.size, 0f, Vector2.down, 0.1f, jumpableGround);
     }
+
+    private IEnumerator ActivateJumpEffect()
+    {
+        jumpEffect.transform.position = transform.position;
+        jumpEffect.SetActive(true);
+        yield return new WaitForSeconds(0.4f);
+        jumpEffect.SetActive(false);
+    }
+
     public void DisableDoubleJump()
     {
         canDoubleJump = true;
     }
+
     public void SetSkin()
     {
         if (SkinManager.Instance != null)
