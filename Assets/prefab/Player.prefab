@@ -451,11 +451,12 @@ MonoBehaviour:
   moveSpeed: 7
   jumpForce: 14
   doubleJumpForce: 12
+  wallSlideSpeed: 2
   StartPoint: {fileID: 0}
   skinPlayer: {fileID: 7142974381817198706}
   dustLeft: {fileID: 579038633}
   dustRight: {fileID: 1870277130}
-  jumpEffect: {fileID: 3349678866881066311, guid: c173c99f4d9f1ba4e8a7845d70f37fe4, type: 3}
+  jumpEffect: {fileID: 0}
 --- !u!114 &4373560044043230735
 MonoBehaviour:
   m_ObjectHideFlags: 0

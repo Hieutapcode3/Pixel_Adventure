@@ -5,21 +5,29 @@ using UnityEngine;
 public class Enemyhit : MonoBehaviour
 {
     [SerializeField] protected Transform[] transformsPos;
-    [SerializeField] private float stompForce = 5f; 
+    [SerializeField] private float stompForce = 5f;
     [SerializeField] private float enemyBounceForce = 4f;
     [SerializeField] private float Speed = 2f;
     private bool canMove = true;
     private int currentposition = 0;
     [SerializeField] private float CurrentTime;
     private float RangeTime = 3f;
-    
-
-
+    private bool isReversing = false;
 
     private Animator anim;
     private Rigidbody2D rb;
     private Collider2D enemyCollider;
-    private bool isHit = false; 
+    private bool isHit = false;
+
+    // Biến cho các sprite và animation khác nhau
+    [SerializeField] private Sprite rock1Sprite;
+    [SerializeField] private Sprite rock2Sprite;
+    [SerializeField] private Sprite rock3Sprite;
+    [SerializeField] private RuntimeAnimatorController rock1Anim;
+    [SerializeField] private RuntimeAnimatorController rock2Anim;
+    [SerializeField] private RuntimeAnimatorController rock3Anim;
+
+    private int rockState = 1;
 
     private void Start()
     {
@@ -27,11 +35,13 @@ public class Enemyhit : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         enemyCollider = GetComponent<Collider2D>();
     }
+
     private void Update()
     {
-        if(canMove) 
+        if (canMove)
             Movement();
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (isHit) return;
@@ -42,16 +52,14 @@ public class Enemyhit : MonoBehaviour
             Debug.Log(playerRb.velocity.y);
             if (collision.transform.position.y > transform.position.y + 0.1f && playerRb.velocity.y <= 0)
             {
-                isHit = true;
-                anim.SetTrigger("Hit");
-                anim.SetBool("Move", false);
-                canMove = false;
-                if (playerRb != null)
+                if (gameObject.name.Contains("Rock"))
                 {
-                    playerRb.velocity = new Vector2(playerRb.velocity.x, stompForce);
+                    StartCoroutine(HandleRockHit());
                 }
-
-                StartCoroutine(DestroyAfterDelay());
+                else
+                {
+                    HandleEnemyHit(playerRb);
+                }
             }
             else
             {
@@ -64,6 +72,51 @@ public class Enemyhit : MonoBehaviour
         }
     }
 
+    private IEnumerator HandleRockHit()
+    {
+        switch (rockState)
+        {
+            case 1:
+                anim.SetTrigger("Hit");
+                rb.AddForce(new Vector2(0, enemyBounceForce), ForceMode2D.Impulse);
+                yield return new WaitForSeconds(0.5f);
+                GetComponent<SpriteRenderer>().sprite = rock2Sprite;
+                anim.runtimeAnimatorController = rock2Anim;
+                rockState = 2;
+                break;
+            case 2:
+                anim.SetTrigger("Hit");
+                rb.AddForce(new Vector2(0, enemyBounceForce), ForceMode2D.Impulse);
+                yield return new WaitForSeconds(0.5f);
+                GetComponent<SpriteRenderer>().sprite = rock3Sprite;
+                anim.runtimeAnimatorController = rock3Anim;
+                rockState = 3;
+                break;
+            case 3:
+                isHit = true;
+                anim.SetTrigger("Hit");
+                anim.SetBool("Move", false);
+                canMove = false;
+                StartCoroutine(DestroyAfterDelay());
+                break;
+        }
+    }
+
+    private void HandleEnemyHit(Rigidbody2D playerRb)
+    {
+        isHit = true;
+        anim.SetTrigger("Hit");
+        anim.SetBool("Move", false);
+        canMove = false;
+        if (playerRb != null)
+        {
+            playerRb.velocity = new Vector2(playerRb.velocity.x, stompForce);
+        }
+        else
+            Debug.Log("PlayerNull");
+        StartCoroutine(DestroyAfterDelay());
+    }
+
     private IEnumerator DestroyAfterDelay()
     {
         enemyCollider.enabled = false;
@@ -72,11 +125,13 @@ public class Enemyhit : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
+
     protected void Movement()
     {
         anim.SetBool("Move", true);
         Vector3 target = transformsPos[currentposition].position;
         transform.position = Vector3.MoveTowards(transform.position, target, Speed * Time.deltaTime);
+
         if (transform.position == transformsPos[currentposition].position)
         {
             anim.SetBool("Move", false);
@@ -85,19 +140,32 @@ public class Enemyhit : MonoBehaviour
             {
                 anim.SetBool("Move", true);
                 CurrentTime = 0f;
-                currentposition++;
-                if (currentposition >= transformsPos.Length)
+
+                if (!isReversing)
                 {
-                    currentposition = 0;
+                    currentposition++;
+                    if (currentposition >= transformsPos.Length)
+                    {
+                        currentposition = transformsPos.Length - 1;
+                        isReversing = true;
+                    }
                 }
-
+                else
+                {
+                    currentposition--;
+                    if (currentposition < 0)
+                    {
+                        currentposition = 0;
+                        isReversing = false;
+                    }
+                }
             }
-            if (currentposition == 1)
-                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
 
+            if (currentposition % 2 != 0)
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
             else
                 transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
-
         }
     }
 }
+

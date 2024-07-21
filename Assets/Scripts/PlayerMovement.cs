@@ -15,6 +15,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private float jumpForce = 14f;
     [SerializeField] private float doubleJumpForce = 12f;
+    [SerializeField] private float wallSlideSpeed = 2f;
+    private bool isTouchingFront;
+    private bool wallSlide;
+
+
     public Transform StartPoint;
     private bool canDoubleJump;
 
@@ -57,34 +62,53 @@ public class PlayerMovement : MonoBehaviour
                 StartCoroutine(ActivateJumpEffect());
             }
         }
+        if(isTouchingFront && !IsGrounded())
+        {
+            wallSlide = true;
+        }
+        else
+        {
+            wallSlide = false;
 
+        }
+        if (wallSlide)
+        {
+            anim.SetBool("WallSlide", true);
+            rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
+        }
         UpdateAnimationState();
     }
 
     private void UpdateAnimationState()
     {
-        MovementState state;
+        MovementState state = MovementState.idle;
 
-        if (dirX > 0)
+        if (dirX > 0 && !wallSlide)
         {
             state = MovementState.running;
             sprite.flipX = false;
             dustRight.SetActive(false);
             dustLeft.SetActive(true);
         }
-        else if (dirX < 0)
+        else if (dirX < 0 && !wallSlide)
         {
             state = MovementState.running;
             sprite.flipX = true;
             dustRight.SetActive(true);
             dustLeft.SetActive(false);
         }
-        else
+        else if(dirX ==0 && !wallSlide)
         {
             state = MovementState.idle;
             dustRight.SetActive(false);
             dustLeft.SetActive(false);
         }
+        else
+        {
+            dustRight.SetActive(false);
+            dustLeft.SetActive(false);
+        }
+            
 
         if (rb.velocity.y > 0.1f)
         {
@@ -93,12 +117,14 @@ public class PlayerMovement : MonoBehaviour
             else
                 state = MovementState.doubleJump;
         }
-        else if (rb.velocity.y < -0.1f)
+        else if (rb.velocity.y < -0.1f && !wallSlide)
         {
             state = MovementState.falling;
+            anim.SetBool("WallSlide", false);
         }
 
         anim.SetInteger("State", (int)state);
+        
     }
 
     private bool IsGrounded()
@@ -125,5 +151,16 @@ public class PlayerMovement : MonoBehaviour
         {
             SkinManager.Instance.SetMainPlayer(skinPlayer);
         }
+    }
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("WallSlide"))
+        {
+            isTouchingFront = true;
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        isTouchingFront = false;
     }
 }
