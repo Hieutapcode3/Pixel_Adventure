@@ -170,7 +170,13 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  stompForce: 5
+  stompForce: 10
   enemyBounceForce: 4
-  Speed: 2
+  speed: 2
   CurrentTime: 0
+  rock1Sprite: {fileID: 0}
+  rock2Sprite: {fileID: 0}
+  rock3Sprite: {fileID: 0}
+  rock1Anim: {fileID: 0}
+  rock2Anim: {fileID: 0}
+  rock3Anim: {fileID: 0}

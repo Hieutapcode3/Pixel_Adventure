@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SkinManager : MonoBehaviour
 {
@@ -23,9 +24,23 @@ public class SkinManager : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void OnEnable()
     {
-        DontDestroyOnLoad(gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "Start Screen")
+        {
+            playerIdle = GameObject.Find("PlayerIdle").GetComponent<PlayerSelect>();
+            playerRun = GameObject.Find("PlayerRun").GetComponent<PlayerSelect>();
+        }
     }
 
     public void NextSkin()

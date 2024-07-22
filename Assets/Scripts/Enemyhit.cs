@@ -5,9 +5,9 @@ using UnityEngine;
 public class Enemyhit : MonoBehaviour
 {
     [SerializeField] protected Transform[] transformsPos;
-    [SerializeField] private float stompForce = 5f;
+    [SerializeField] private float stompForce = 10f;
     [SerializeField] private float enemyBounceForce = 4f;
-    [SerializeField] private float Speed = 2f;
+    [SerializeField] private float speed = 2f;
     private bool canMove = true;
     private int currentposition = 0;
     [SerializeField] private float CurrentTime;
@@ -55,6 +55,7 @@ public class Enemyhit : MonoBehaviour
                 if (gameObject.name.Contains("Rock"))
                 {
                     StartCoroutine(HandleRockHit());
+                    playerRb.velocity = new Vector2(-stompForce, stompForce);
                 }
                 else
                 {
@@ -71,6 +72,15 @@ public class Enemyhit : MonoBehaviour
             }
         }
     }
+    private void LowerWaypoints()
+    {
+        foreach (Transform waypoint in transformsPos)
+        {
+            Vector3 pos = waypoint.position;
+            pos.y -= 0.3f;
+            waypoint.position = pos;
+        }
+    }
 
     private IEnumerator HandleRockHit()
     {
@@ -79,18 +89,24 @@ public class Enemyhit : MonoBehaviour
             case 1:
                 anim.SetTrigger("Hit");
                 rb.AddForce(new Vector2(0, enemyBounceForce), ForceMode2D.Impulse);
+                speed = 0;
                 yield return new WaitForSeconds(0.5f);
                 GetComponent<SpriteRenderer>().sprite = rock2Sprite;
                 anim.runtimeAnimatorController = rock2Anim;
                 rockState = 2;
+                speed = 2f;
+                LowerWaypoints();
                 break;
             case 2:
                 anim.SetTrigger("Hit");
                 rb.AddForce(new Vector2(0, enemyBounceForce), ForceMode2D.Impulse);
+                speed = 0;
                 yield return new WaitForSeconds(0.5f);
                 GetComponent<SpriteRenderer>().sprite = rock3Sprite;
                 anim.runtimeAnimatorController = rock3Anim;
                 rockState = 3;
+                speed = 2f;
+                LowerWaypoints();
                 break;
             case 3:
                 isHit = true;
@@ -110,7 +126,8 @@ public class Enemyhit : MonoBehaviour
         canMove = false;
         if (playerRb != null)
         {
-            playerRb.velocity = new Vector2(playerRb.velocity.x, stompForce);
+            playerRb.velocity = new Vector2(-stompForce, stompForce);
+            Debug.Log("Not null");
         }
         else
             Debug.Log("PlayerNull");
@@ -130,7 +147,7 @@ public class Enemyhit : MonoBehaviour
     {
         anim.SetBool("Move", true);
         Vector3 target = transformsPos[currentposition].position;
-        transform.position = Vector3.MoveTowards(transform.position, target, Speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
         if (transform.position == transformsPos[currentposition].position)
         {
