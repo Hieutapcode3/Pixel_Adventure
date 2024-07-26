@@ -5,11 +5,11 @@ using UnityEngine;
 public class SpikeBall : MonoBehaviour
 {
     [Range(0f, 360f)]
-    [SerializeField] private float angleRange = 0f; // Phạm vi góc đung đưa
+    [SerializeField] private float angleRange = 0f; 
     [Range(-180f, 180f)]
-    [SerializeField] private float startAngle = 0f; // Góc bắt đầu
-    [SerializeField] private float radius = 2f; // Bán kính để vẽ Gizmos
-    [SerializeField] private float speed = 2f; // Tốc độ đung đưa
+    [SerializeField] private float startAngle = 0f; 
+    [SerializeField] private float radius = 2f; 
+    [SerializeField] private float speed = 2f; 
 
     void Start()
     {

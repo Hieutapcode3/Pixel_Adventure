@@ -323,7 +323,7 @@ Animator:
   m_GameObject: {fileID: 4373560044043230726}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 767ea7a3dd1f0714fb091ce729be4766, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6bcedf89c9593f54386c4d5bc4901fc6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -374,7 +374,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -6367560908665664636, guid: 3750f45c844123341b9a777a96cb1eca, type: 3}
+  m_Sprite: {fileID: -6367560908665664636, guid: cd947491a13509945aa1b644f9db3ef2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -419,7 +419,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.036227822, y: -0.23068273}
+  m_Offset: {x: 0.036227822, y: -0.24963081}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -430,7 +430,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1740072, y: 1.3600419}
+  m_Size: {x: 1.1740072, y: 1.397938}
   m_EdgeRadius: 0
 --- !u!114 &4373560044043230733
 MonoBehaviour:
@@ -494,7 +494,7 @@ AudioSource:
   m_GameObject: {fileID: 4373560044043230726}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3637901698569588340, guid: 773b848a600172142bfbdde9f2aa20b0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -590,7 +590,7 @@ AudioSource:
   m_GameObject: {fileID: 4373560044043230726}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3637901698569588340, guid: 773b848a600172142bfbdde9f2aa20b0, type: 2}
   m_audioClip: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -686,7 +686,7 @@ AudioSource:
   m_GameObject: {fileID: 4373560044043230726}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 3637901698569588340, guid: 773b848a600172142bfbdde9f2aa20b0, type: 2}
   m_audioClip: {fileID: 8300000, guid: 4b4dd7245f6104c8c8eb07ccf6b386ed, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -785,7 +785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed135d239b6e17a4fa3ecd13cf4ca081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSelected: 3
+  playerSelected: 2
   anim: {fileID: 4373560044043230732}
   spriteRenderer: {fileID: 4373560044043230721}
   playerController:
@@ -798,4 +798,4 @@ MonoBehaviour:
   - {fileID: -6367560908665664636, guid: d348dff3819df794186a80cb95777629, type: 3}
   - {fileID: -6367560908665664636, guid: cd947491a13509945aa1b644f9db3ef2, type: 3}
   - {fileID: -6367560908665664636, guid: 3750f45c844123341b9a777a96cb1eca, type: 3}
-  skinSave: 3
+  skinSave: 2

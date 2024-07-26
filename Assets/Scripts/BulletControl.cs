@@ -1,0 +1,25 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BulletControl : MonoBehaviour
+{
+    public float speed = 2f;
+
+    void Update()
+    {
+        transform.position += Vector3.down * speed * Time.deltaTime;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerLife.Instance.Die();
+        }
+    }
+}

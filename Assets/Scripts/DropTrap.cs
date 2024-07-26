@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class DropTrap : MonoBehaviour
 {
-    [SerializeField] private GameObject[] wayPoints;
-    [SerializeField] private Animator anim;
-    public float SpeedDrop = 2.5f;
-    private int currentWaypointIndex = 0;
+    [SerializeField] private GameObject[]       wayPoints;
+    [SerializeField] private Animator           anim;
+    public float                                SpeedDrop = 2.5f;
+    private int                                 currentWaypointIndex = 0;
 
 
     void Start()
