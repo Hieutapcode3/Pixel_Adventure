@@ -5,23 +5,31 @@ using UnityEngine;
 public class PosSpawnBullet : MonoBehaviour
 {
     public string bulletTag = "Bullet";
-    public float bulletInterval = 0.5f;
+    public float bulletInterval = 0.3f;
     private bool canShoot = true;
 
-    public void Shoot()
+    public GameObject Shoot(Vector2 direction)
     {
         if (canShoot)
         {
-            StartCoroutine(ShootCoroutine());
+            StartCoroutine(ShootCoroutine(direction));
         }
+        return null; 
     }
 
-    IEnumerator ShootCoroutine()
+    IEnumerator ShootCoroutine(Vector2 direction)
     {
         canShoot = false;
 
+        GameObject bullet = ObjectPool.instance.SpawnFromPool(bulletTag, transform.position, Quaternion.identity);
+        BulletControl bulletControl = bullet.GetComponent<BulletControl>();
+        if (bulletControl != null)
+        {
+            bulletControl.SetMoveDirection(direction);
+        }
+
         yield return new WaitForSeconds(bulletInterval);
-        ObjectPool.instance.SpawnFromPool(bulletTag, transform.position, Quaternion.identity);
         canShoot = true;
+ 
     }
 }

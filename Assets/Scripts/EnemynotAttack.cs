@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemyhit : MonoBehaviour
+public class EnemynotAttack : MonoBehaviour
 {
     [SerializeField] protected Transform[] transformsPos;
     [SerializeField] private float stompForce = 10f;
@@ -19,7 +19,6 @@ public class Enemyhit : MonoBehaviour
     private Collider2D enemyCollider;
     private bool isHit = false;
 
-    // Biến cho các sprite và animation khác nhau
     [SerializeField] private Sprite rock1Sprite;
     [SerializeField] private Sprite rock2Sprite;
     [SerializeField] private Sprite rock3Sprite;
@@ -49,7 +48,6 @@ public class Enemyhit : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             Rigidbody2D playerRb = collision.gameObject.GetComponent<Rigidbody2D>();
-            Debug.Log(playerRb.velocity.y);
             if (collision.transform.position.y > transform.position.y + 0.1f && playerRb.velocity.y <= 0)
             {
                 if (gameObject.name.Contains("Rock"))
@@ -127,10 +125,7 @@ public class Enemyhit : MonoBehaviour
         if (playerRb != null)
         {
             playerRb.velocity = new Vector2(-stompForce, stompForce);
-            Debug.Log("Not null");
         }
-        else
-            Debug.Log("PlayerNull");
         StartCoroutine(DestroyAfterDelay());
     }
 
