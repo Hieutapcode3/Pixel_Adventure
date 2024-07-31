@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    private BoxCollider2D coll;
-    private SpriteRenderer sprite;
-    private Animator anim;
     [SerializeField] private AudioSource jumpSoundEffect;
     [SerializeField] private LayerMask jumpableGround;
 
@@ -19,16 +15,18 @@ public class PlayerMovement : MonoBehaviour
     private bool isTouchingFront;
     private bool wallSlide;
 
-
     public Transform StartPoint;
     private bool canDoubleJump;
-
-    public PlayerSelect skinPlayer;
 
     [SerializeField] private GameObject dustLeft;
     [SerializeField] private GameObject dustRight;
     [SerializeField] private GameObject jumpEffect;
 
+    public PlayerSelect skinPlayer;
+    private Rigidbody2D rb;
+    private BoxCollider2D coll;
+    private SpriteRenderer sprite;
+    private Animator anim;
     private enum MovementState { idle, running, jumping, falling, wallSlide, doubleJump }
 
     void Start()

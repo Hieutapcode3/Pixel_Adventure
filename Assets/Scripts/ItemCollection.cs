@@ -1,13 +1,29 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemCollection : MonoBehaviour
 {
-    private int cherries = 0;
-    [SerializeField] private Text cherriesText;
     [SerializeField] private AudioSource itemCollect;
+    [SerializeField] private Text cherriesText;
+    [SerializeField] private Text strawberriesText;
+    [SerializeField] private Text bananasText;
+    [SerializeField] private Text melonsText;
+
+    [SerializeField] private int totalCherries;
+    [SerializeField] private int totalStrawberries;
+    [SerializeField] private int totalBananas;
+    [SerializeField] private int totalMelons;
+
+    private int cherriesLeft = 0;
+    private int strawberriesLeft = 0;
+    private int bananasLeft = 0;
+    private int melonsLeft = 0;
+
+    private void Start()
+    {
+        UpdateUI();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,15 +31,40 @@ public class ItemCollection : MonoBehaviour
         {
             itemCollect.Play();
             collision.GetComponent<Animator>().SetTrigger("Collision");
-            StartCoroutine(CollectItem(collision.gameObject));
+           CollectItem(collision.gameObject);
         }
     }
 
-    private IEnumerator CollectItem(GameObject item)
+    private void CollectItem(GameObject item)
     {
-        yield return new WaitForSeconds(0.5f); 
+        string itemName = item.name.ToLower();
+
+        if (itemName.Contains("cherry"))
+        {
+            cherriesLeft++;
+        }
+        else if (itemName.Contains("strawberry"))
+        {
+            strawberriesLeft++;
+        }
+        else if (itemName.Contains("banana"))
+        {
+            bananasLeft++;
+        }
+        else if (itemName.Contains("melon"))
+        {
+            melonsLeft++;
+        }
+
         Destroy(item);
-        cherries++;
-        cherriesText.text = "cherries: " + cherries;
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        cherriesText.text =  ":" + cherriesLeft + "/" + totalCherries;
+        strawberriesText.text = ":" + strawberriesLeft + "/" + totalStrawberries;
+        bananasText.text = ":" + bananasLeft + "/" + totalBananas;
+        melonsText.text = ":" + melonsLeft + "/" + totalMelons;
     }
 }

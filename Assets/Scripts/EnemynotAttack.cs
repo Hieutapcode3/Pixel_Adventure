@@ -4,29 +4,29 @@ using UnityEngine;
 
 public class EnemynotAttack : MonoBehaviour
 {
-    [SerializeField] protected Transform[] transformsPos;
-    [SerializeField] private float stompForce = 10f;
-    [SerializeField] private float enemyBounceForce = 4f;
-    [SerializeField] private float speed = 2f;
-    private bool canMove = true;
-    private int currentposition = 0;
-    [SerializeField] private float CurrentTime;
-    private float RangeTime = 3f;
-    private bool isReversing = false;
+    [SerializeField] protected Transform[]              transformsPos;
+    [SerializeField] private float                      stompForce = 10f;
+    [SerializeField] private float                      enemyBounceForce = 4f;
+    [SerializeField] private float                      speed = 2f;
+    private bool                                        canMove = true;
+    private int                                         currentposition = 0;
+    [SerializeField] private float                      currentTime;
+    private float                                       rangeTime = 3f;
+    private bool                                        isReversing = false;
+    private int                                         rockState = 1;
+
+    [SerializeField] private Sprite                     rock1Sprite;
+    [SerializeField] private Sprite                     rock2Sprite;
+    [SerializeField] private Sprite                     rock3Sprite;
+    [SerializeField] private RuntimeAnimatorController  rock1Anim;
+    [SerializeField] private RuntimeAnimatorController  rock2Anim;
+    [SerializeField] private RuntimeAnimatorController  rock3Anim;
+
 
     private Animator anim;
     private Rigidbody2D rb;
     private Collider2D enemyCollider;
     private bool isHit = false;
-
-    [SerializeField] private Sprite rock1Sprite;
-    [SerializeField] private Sprite rock2Sprite;
-    [SerializeField] private Sprite rock3Sprite;
-    [SerializeField] private RuntimeAnimatorController rock1Anim;
-    [SerializeField] private RuntimeAnimatorController rock2Anim;
-    [SerializeField] private RuntimeAnimatorController rock3Anim;
-
-    private int rockState = 1;
 
     private void Start()
     {
@@ -147,11 +147,11 @@ public class EnemynotAttack : MonoBehaviour
         if (transform.position == transformsPos[currentposition].position)
         {
             anim.SetBool("Move", false);
-            CurrentTime += Time.deltaTime;
-            if (CurrentTime >= RangeTime)
+            currentTime += Time.deltaTime;
+            if (currentTime >= rangeTime)
             {
                 anim.SetBool("Move", true);
-                CurrentTime = 0f;
+                currentTime = 0f;
 
                 if (!isReversing)
                 {

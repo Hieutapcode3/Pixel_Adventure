@@ -16,17 +16,21 @@ public class SkinManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
     }
+    private void Update()
+    {
+    }
 
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        Debug.Log("Game scene");
+
     }
 
     private void OnDisable()
@@ -34,8 +38,9 @@ public class SkinManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        Debug.Log("Game scene");
         if (scene.name == "Start Screen")
         {
             playerIdle = GameObject.Find("PlayerIdle").GetComponent<PlayerSelect>();

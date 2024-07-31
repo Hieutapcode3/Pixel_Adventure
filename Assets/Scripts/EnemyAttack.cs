@@ -3,27 +3,27 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] protected Transform[] transformsPos;
-    [SerializeField] private float Speed = 1.5f;
-    [SerializeField] private float CurrentTime;
-    [SerializeField] private float RangeTime = 3f;
-    private int currentposition = 0;
+    [SerializeField] protected Transform[]      transformsPos;
+    [SerializeField] private float              speed = 1.5f;
+    [SerializeField] private float              currentTime;
+    [SerializeField] private float              rangeTime = 3f;
+    private int                                 currentposition = 0;
 
-    [SerializeField] private float attackCooldown;
-    [SerializeField] private float range;
-    [SerializeField] private float colliderDistance;
-    private float cooldownTime = Mathf.Infinity;
-    [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private PlayerMovement player;
-    private bool isReversing;
-    private bool isWaiting = false;
-    private bool playerInRange = false;
-    [SerializeField] private float stompForce = 10f;
-    [SerializeField] private float enemyBounceForce = 4f;
+    [SerializeField] private float              attackCooldown;
+    [SerializeField] private float              range;
+    [SerializeField] private float              colliderDistance;
+    private float                               cooldownTime = Mathf.Infinity;
+    [SerializeField] private LayerMask          playerLayer;
+    [SerializeField] private PlayerMovement     player;
+    private bool                                isReversing;
+    private bool                                isWaiting = false;
+    private bool                                playerInRange = false;
+    [SerializeField] private float              stompForce = 10f;
+    [SerializeField] private float              enemyBounceForce = 4f;
 
-    private Animator anim;
-    [SerializeField] private BoxCollider2D col;
-    private Rigidbody2D rb;
+    private Animator                            anim;
+    [SerializeField] private BoxCollider2D      col;
+    private Rigidbody2D                         rb;
 
     void Start()
     {
@@ -121,16 +121,16 @@ public class EnemyAttack : MonoBehaviour
     {
         anim.SetBool("Move", true);
         Vector3 target = transformsPos[currentposition].position;
-        transform.position = Vector3.MoveTowards(transform.position, target, Speed * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
         if (transform.position == transformsPos[currentposition].position)
         {
             anim.SetBool("Move", false);
-            CurrentTime += Time.deltaTime;
-            if (CurrentTime >= RangeTime)
+            currentTime += Time.deltaTime;
+            if (currentTime >= rangeTime)
             {
                 anim.SetBool("Move", true);
-                CurrentTime = 0f;
+                currentTime = 0f;
 
                 if (!isReversing)
                 {

@@ -5,14 +5,14 @@ using static UnityEditorInternal.ReorderableList;
 
 public class FanControll : MonoBehaviour
 {
+    [SerializeField] private float              downForce = 2f;
+    private bool                                checkCollision = false;
+    private Vector3                             defaultPos;
+    [SerializeField] private GameObject         fanEffect;
+
     private Animator anim;
     private Rigidbody2D rb;
     private BoxCollider2D col;
-    [SerializeField] private float downForce = 2f;
-    private bool checkCollision = false;
-    private Vector3 defaultPos;
-    [SerializeField] private GameObject fanEffect;
-
     void Start()
     {
         anim = GetComponent<Animator>();

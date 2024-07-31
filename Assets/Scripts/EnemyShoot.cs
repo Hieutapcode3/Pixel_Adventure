@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class EnemyShoot : MonoBehaviour
 {
-    [SerializeField] private Transform[] points;
-    [SerializeField] private float speed = 2f;
-    [SerializeField] private float raycastDistance = 9f;
-    [SerializeField] private LayerMask playerLayer;
-    [SerializeField] private PosSpawnBullet posSpawnBullet;
-    [SerializeField] private Vector2 raycastDirection = Vector2.down;
-    [SerializeField] private float stompForce = 10f;
-    [SerializeField] private float enemyBounceForce = 4f;
+    [SerializeField] private Transform[]                points;
+    [SerializeField] private float                      speed = 2f;
+    [SerializeField] private float                      raycastDistance = 9f;
+    [SerializeField] private LayerMask                  playerLayer;
+    [SerializeField] private PosSpawnBullet             posSpawnBullet;
+    [SerializeField] private Vector2                    raycastDirection = Vector2.down;
+    [SerializeField] private float                      stompForce = 10f;
+    [SerializeField] private float                      enemyBounceForce = 4f;
 
-    private bool movingToB = true;
-    private bool isMoving = true;
+    private bool                                        movingToB = true;
+    private bool                                        isMoving = true;
 
     private Animator anim;
     private BoxCollider2D col;
