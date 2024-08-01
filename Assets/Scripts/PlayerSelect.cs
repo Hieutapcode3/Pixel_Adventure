@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerSelect : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class PlayerSelect : MonoBehaviour
 
     public Animator anim;
     public SpriteRenderer spriteRenderer;
+    public Image Img;
 
     public RuntimeAnimatorController[] playerController;
     public Sprite[] playerRender;
@@ -53,18 +55,26 @@ public class PlayerSelect : MonoBehaviour
         {
             case Player.Guy:
                 spriteRenderer.sprite = playerRender[0];
+                if(Img != null)
+                    Img.sprite = playerRender[0];
                 anim.runtimeAnimatorController = playerController[0];
                 break;
             case Player.PinkMan:
                 spriteRenderer.sprite = playerRender[1];
+                if (Img != null)
+                    Img.sprite = playerRender[1];
                 anim.runtimeAnimatorController = playerController[1];
                 break;
             case Player.Mask:
                 spriteRenderer.sprite = playerRender[3];
+                if (Img != null)
+                    Img.sprite = playerRender[3];
                 anim.runtimeAnimatorController = playerController[3];
                 break;
             case Player.Frog:
                 spriteRenderer.sprite = playerRender[2];
+                if (Img != null) 
+                    Img.sprite = playerRender[2];
                 anim.runtimeAnimatorController = playerController[2];
                 break;
         }

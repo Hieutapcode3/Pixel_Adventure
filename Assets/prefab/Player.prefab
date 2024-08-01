@@ -323,7 +323,7 @@ Animator:
   m_GameObject: {fileID: 4373560044043230726}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c9028244d542598428735e44571252aa, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6bcedf89c9593f54386c4d5bc4901fc6, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -374,7 +374,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -6367560908665664636, guid: 40de9a8703e2e5a47882b0b86451c741, type: 3}
+  m_Sprite: {fileID: -6367560908665664636, guid: cd947491a13509945aa1b644f9db3ef2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -453,10 +453,10 @@ MonoBehaviour:
   doubleJumpForce: 12
   wallSlideSpeed: 2
   StartPoint: {fileID: 0}
-  skinPlayer: {fileID: 7142974381817198706}
   dustLeft: {fileID: 579038633}
   dustRight: {fileID: 1870277130}
   jumpEffect: {fileID: 0}
+  skinPlayer: {fileID: 7142974381817198706}
 --- !u!114 &4373560044043230735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -469,8 +469,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8e33457e8c804242a93b1c0dd811adc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cherriesText: {fileID: 0}
   itemCollect: {fileID: 4373560044043230728}
+  cherriesText: {fileID: 0}
+  strawberriesText: {fileID: 0}
+  bananasText: {fileID: 0}
+  melonsText: {fileID: 0}
+  totalCherries: 0
+  totalStrawberries: 0
+  totalBananas: 0
+  totalMelons: 0
 --- !u!114 &4373560044043230734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -785,9 +792,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed135d239b6e17a4fa3ecd13cf4ca081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSelected: 0
+  playerSelected: 2
   anim: {fileID: 4373560044043230732}
   spriteRenderer: {fileID: 4373560044043230721}
+  Img: {fileID: 0}
   playerController:
   - {fileID: 9100000, guid: c9028244d542598428735e44571252aa, type: 2}
   - {fileID: 9100000, guid: 56674612d3e0efb44b1ba31132215f10, type: 2}
@@ -798,4 +806,4 @@ MonoBehaviour:
   - {fileID: -6367560908665664636, guid: d348dff3819df794186a80cb95777629, type: 3}
   - {fileID: -6367560908665664636, guid: cd947491a13509945aa1b644f9db3ef2, type: 3}
   - {fileID: -6367560908665664636, guid: 3750f45c844123341b9a777a96cb1eca, type: 3}
-  skinSave: 0
+  skinSave: 2
